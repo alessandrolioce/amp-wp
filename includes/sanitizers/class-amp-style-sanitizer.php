@@ -1362,6 +1362,11 @@ class AMP_Style_Sanitizer extends AMP_Base_Sanitizer {
 			$file_path = substr( $url, strlen( $site_url ) + strlen( $wp_content ) );
 		}
 
+		list( $base_path, $file_path ) = apply_filters( 'get_validated_url_file_path', [
+			$base_path,
+			$file_path
+		], $url, $remove_url_scheme );
+
 		if ( ! $file_path || false !== strpos( $file_path, '../' ) || false !== strpos( $file_path, '..\\' ) ) {
 			return new WP_Error( self::STYLESHEET_FILE_PATH_NOT_ALLOWED );
 		}
